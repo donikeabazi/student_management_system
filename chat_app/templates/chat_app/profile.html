@@ -1,26 +1,20 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>Home Template</h1>
-
 <style>
-    .home-container {
+    .profile {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr;
     }
 </style>
 
-<div class="home-container">
+<h1>{{user.username}}</h1>
+
+<div class="profile">
     <div>{% include 'chat_app/topics.html' %}</div>
 
-<div>
-    <h5>{{room_count}} rooms available</h5>
-    <a href="{% url 'add-room' %}">Create Room</a>
-    {% include 'chat_app/feed.html' %}
-</div>
+    <div>{% include 'chat_app/feed.html' %}</div>
 
     <div>{% include 'chat_app/activity.html' %}</div>
-
 </div>
-
-{% endblock content %}
+{% endblock %}
