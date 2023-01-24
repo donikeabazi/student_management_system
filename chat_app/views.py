@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.conf import settings
 from django.contrib.auth import get_user_model
 # from django.contrib import messages
 from django.db.models import Q
