@@ -7,7 +7,9 @@ from student_management_app.EmailBackEnd import EmailBackEnd
 
 # Create your views here.
 def showDemoPage(request):
-    return render(request, "demo.html")
+    if request.user.is_authenticated:
+        return render(request, "demo.html")
+    return render(request, "login_page.html")
 
 def ShowLoginPage(request):
     return render(request,"login_page.html")
