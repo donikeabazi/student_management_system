@@ -1,11 +1,10 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
-
+from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponse
 
 class LoginCheckMiddleWare(MiddlewareMixin):
-
-    def process_view(self,request,view_func,view_args,view_kwargs):
+    
+    def process_view( self, request, view_func, view_args, view_kwargs):
         modulename=view_func.__module__
         print(modulename)
         user=request.user
@@ -15,17 +14,15 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                     pass
                 elif modulename == "student_management_app.views" or modulename == "django.views.static":
                     pass
-                elif modulename == "django.contrib.auth.views" or modulename =="django.contrib.admin.sites":
-                    pass
                 else:
-                    return HttpResponseRedirect(reverse("admin_home"))
+                    HttpResponseRedirect(reverse('admin_home'))
             elif user.user_type == "2":
-                if modulename == "student_management_app.StaffViews" or modulename == "student_management_app.EditResultVIewClass":
+                if modulename == "student_management_app.StaffViews":
                     pass
                 elif modulename == "student_management_app.views" or modulename == "django.views.static":
                     pass
                 else:
-                    return HttpResponseRedirect(reverse("staff_home"))
+                    HttpResponseRedirect(reverse('staff_home'))
             elif user.user_type == "3":
                 if modulename == "student_management_app.StudentViews" or modulename == "django.views.static":
                     pass
