@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Student Management System</title>
+  <title>Student Management System |  Student Panel</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -41,16 +41,16 @@
       </li>
      
     </ul>
-    <h2 style="margin-left: 10px;margin-top:5px">System Management System HOD Login</h2>
+    <h2 style="margin-left: 10px;margin-top:5px">System Management System | Student Panel</h2>
 
    
     <!-- Right navbar links -->
-    {% include 'hod_template/notification_template.html' %}
+    {% include 'student_template/notification_template.html' %}
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-   {% include 'hod_template/sidebar_template.html' with user=user id=id %}
+   {% include 'student_template/sidebar_template.html' with user=user id=id %}
 
   <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -79,7 +79,7 @@
     
   </div>
   <!-- /.content-wrapper -->
-  {% include 'hod_template/footer.html'%}
+  {% include 'student_template/footer.html'%}
 
 </div>
 <!-- ./wrapper -->
