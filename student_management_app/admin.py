@@ -8,7 +8,7 @@ from .models import CustomUser, Students, Courses, Subjects, Attendance, Attenda
 class UserModel(UserAdmin):
     pass
 
-admin.site.register(CustomUser,UserModel)
+admin.site.register(CustomUser, UserModel)
 admin.site.register(Students)
 admin.site.register(Courses)
 admin.site.register(Subjects)

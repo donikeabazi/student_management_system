@@ -1,4 +1,4 @@
-{% extends 'staff_template/base_template.html' %}
+{% extends 'student_template/base_template.html' %}
 {% block page_title %}
 Leave Report and Apply for Leave
 {% endblock page_title %}
@@ -15,7 +15,7 @@ Leave Report and Apply for Leave
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-               <form action="{% url 'staff_apply_leave_save' %}" method="post">
+               <form action="{% url 'student_apply_leave_save' %}" method="post">
                 <div class="card-body">
 
                    <div class="form-group">

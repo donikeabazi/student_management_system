@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="{% static "plugins/summernote/summernote-bs4.css" %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  {% block custom_css %}{% endblock custom_css %}
+    {% block custom_css %}{% endblock custom_css %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -39,30 +39,34 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
-     
     </ul>
-    <h2 style="margin-left: 10px;margin-top:5px">System Management System | Student Panel</h2>
+    <h4 style="margin-left: 10px;margin-top: 5px;">Student Management Sytem | Student Panel</h4>
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">
+          Logout
+        </a>
+      </li>
+    </ul>
 
-   
     <!-- Right navbar links -->
-    {% include 'student_template/notification_template.html' %}
   </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-   {% include 'student_template/sidebar_template.html' with user=user id=id %}
+    {% include 'student_template/sidebar_template.html' with user=user id=id %}
 
   <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
-   
-    <!-- Content Header (Page header) -->
+   <div class="content-wrapper">
+       <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-              {% block page_title  %}
-              {% endblock page_title %}
+                {% block page_title %}
+                {% endblock page_title %}
             </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
@@ -73,13 +77,12 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-  
     <!-- /.content-header -->
-    {% block main_content %}{% endblock main_content %}
-    
+     {% block main_content %}{% endblock main_content %}
+
   </div>
   <!-- /.content-wrapper -->
-  {% include 'student_template/footer.html'%}
+    {% include 'staff_template/footer.html' %}
 
 </div>
 <!-- ./wrapper -->
@@ -119,7 +122,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{% static "dist/js/demo.js" %}"></script>
 
-{% block custom_js  %}
+{% block custom_js %}
 {% endblock custom_js %}
 
 </body>

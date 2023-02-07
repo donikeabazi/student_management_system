@@ -1,0 +1,149 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Manage Subject
+{% endblock page_title %}
+{% block main_content %}
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">{% if subject %} Edit {% else %} Add {% endif %} Subject</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          {% if subject %}
+          <form role="form" action="/edit_subject" method="post">
+          {% else %}
+          <form role="form" action="/subjects" method="post">
+          {% endif %}
+              {% csrf_token %}
+            <div class="card-body">
+              {% if subject %}
+              <div class="form-group">
+                <label>Subject Name </label>
+                <input type="text" class="form-control" name="subject_name" placeholder="Enter Subject" value="{{ subject.subject_name }}">
+                <input type="hidden" class="form-control" name="subject_id" placeholder="Enter Subject" value="{{ subject.id }}">
+              </div>
+               <div class="form-group">
+                <label>Course </label>
+                <select class="form-control" name="course">
+                    {% for course in courses %}
+                          <option value="{{ course.id }}" {% if course.id == subject.course_id.id %} selected {% endif %}>{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Staff</label>
+                <select class="form-control" name="staff">
+                    {% for staff in staffs %}
+                      <option value="{{ staff.id }}" {% if staff.id == subject.staff_id.id %} selected {% endif %}>{{ staff.first_name }} {{ staff.last_name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              {% else %}
+              <div class="form-group">
+                <label>Subject Name </label>
+                <input type="text" class="form-control" name="subject_name" placeholder="Enter Subject">
+              </div>
+               <div class="form-group">
+                <label>Course </label>
+                <select class="form-control" name="course">
+                    {% for course in courses %}
+                      <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Staff</label>
+                <select class="form-control" name="staff">
+                    {% for staff in staffs %}
+                      <option value="{{ staff.id }}">{{ staff.first_name }} {{ staff.last_name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              {% endif %}
+               <div class="form-group">
+                  {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                    {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary btn-block">{% if subject %} Save {% else %} Add {% endif %} Subject</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+
+
+
+      </div>
+      </div>
+
+           <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Subject Details</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Subject Name</th>
+                      <th>Course Name</th>
+                      <th>Course ID</th>
+                      <th>Staff Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for subject in subjects %}
+                    <tr>
+                      <td>{{ subject.id }}</td>
+                      <td>{{ subject.subject_name }}</td>
+                      <td>{{ subject.course_id.course_name }}</td>
+                      <td>{{ subject.course_id.id }}</td>
+                      <td>{{ subject.staff_id.first_name }} {{ subject.staff_id.last_name }}</td>
+                      <td><a href="/edit_subject/{{ subject.id }}" class="btn btn-success">Edit</a></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}
+
