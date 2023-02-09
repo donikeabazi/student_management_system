@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -46,7 +46,7 @@ def student_home(request):
         }
         return render(request,"student_template/student_home_template.html", context)
 
-    return render(request, "login_page.html")
+    return render("/show_login")
 
 
 def join_class_room(request,subject_id,session_year_id):

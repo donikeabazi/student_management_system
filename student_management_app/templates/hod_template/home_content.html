@@ -189,57 +189,50 @@ Home
 {% block custom_js %}
 <script>
     $(document).ready(function(){
+      var pieData = {
+        labels: ['Students', 'Staffs'],
+        datasets: [
+          {
+            data: [{{ student_count }}, {{ staff_count }}],
+            backgroundColor : ['#f56954', '#00a65a'],
+          }
+        ]
+      };
 
-            var pieData        = {
-                  labels: [
-                      'Students',
-                      'Staffs'
-                  ],
-                  datasets: [
-                    {
-                      data: [{{ student_count }},{{ staff_count }}],
-                      backgroundColor : ['#f56954', '#00a65a'],
-                    }
-                  ]
-             };
+      var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+      var pieOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions
+      });
 
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieOptions     = {
-              maintainAspectRatio : false,
-              responsive : true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            var pieChart = new Chart(pieChartCanvas, {
-              type: 'pie',
-              data: pieData,
-              options: pieOptions
-            });
-
-            //Second Chart for Total Subject in Each Course
-                var subject_count_list={{ subject_count_list }};
-                var course_name_list={{ course_name_list|safe }};
-                var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-                var donutData        = {
-                  labels:course_name_list,
-                  datasets: [
-                    {
-                      data: subject_count_list,
-                      backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-                    }
-                  ]
-                }
-                var donutOptions     = {
-                  maintainAspectRatio : false,
-                  responsive : true,
-                }
-                //Create pie or douhnut chart
-                // You can switch between pie and douhnut using the method below.
-                var donutChart = new Chart(donutChartCanvas, {
-                  type: 'doughnut',
-                  data: donutData,
-                  options: donutOptions
-                });
+      var subject_count_list= {{ subject_count_list }};
+      var course_name_list= {{ course_name_list|safe }};
+      var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+      var donutData = {
+        labels: course_name_list,
+        datasets: [
+          {
+            data: subject_count_list,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart = new Chart(donutChartCanvas, {
+        type: 'doughnut',
+        data: donutData,
+        options: donutOptions
+      });
 
 
                 //show total student in each course

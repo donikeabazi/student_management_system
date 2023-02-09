@@ -4,15 +4,36 @@ from uuid import uuid4
 
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from student_management_app.models import FeedBackStaffs, CustomUser, StudentResult, OnlineClassRoom, LeaveReportStaff, Staffs, Subjects, SessionYearModel, Students, Attendance, AttendanceReport
+from student_management_app.models import FeedBackStaffs, Courses, CustomUser, StudentResult, OnlineClassRoom, LeaveReportStaff, Staffs, Subjects, SessionYearModel, Students, Attendance, AttendanceReport
 
 def staff_home(request):
     if request.user.is_authenticated:
-        return render(request,"staff_template/staff_home_template.html")
-    return render(request, "login_page.html")
+        subjects = Subjects.objects.filter(staff_id = request.user.id)
+        course_id_list = []
+        for subject in subjects:
+            course = Courses.objects.get(id=subject.course_id.id)
+            course_id_list.append(course.id)
+        final_course = []
+        for course_id in course_id_list:
+            if course_id not in final_course:
+                final_course.append(course_id)
+        students_count = Students.objects.filter(course_id__in = final_course).count()
+        attendance_count = Attendance.objects.filter(subject_id__in = subjects).count()
+
+        staff = Staffs.objects.get(admin=request.user.id)
+        leave_count = LeaveReportStaff.objects.filter(staff_id=staff.id, leave_status=1).count()
+
+        context = {
+            "students_count": students_count,
+            "attendance_count": attendance_count,
+            "leave_count": leave_count,
+            "subjects": subjects,
+        }
+        return render(request,"staff_template/staff_home_template.html", context)
+    return redirect("/show_login")
 
 
 def staff_take_attendance(request):

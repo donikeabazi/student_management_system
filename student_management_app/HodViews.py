@@ -13,8 +13,30 @@ from student_management_app.models import CustomUser, Staffs, Courses, Subjects,
 
 def admin_home(request):
     if request.user.is_authenticated:
-        return render(request, "hod_template/home_content.html")
-    return redirect(request, "login.html")
+        student_count = Students.objects.all().count()
+        staff_count = Staffs.objects.all().count()
+        subject_count = Subjects.objects.all().count()
+
+        courses = Courses.objects.all()
+        course_name_list=[]
+        subject_count_list=[]
+
+        for course in courses:
+            subjects = Subjects.objects.filter(course_id=course.id).count()
+            course_name_list.append(course.course_name)
+            subject_count_list.append(subjects)
+
+        context = {
+            "student_count": student_count,
+            "staff_count": staff_count,
+            "course_count": courses.count(),
+            "subject_count": subject_count,
+            "course_name_list": course_name_list,
+            "subject_count_list": subject_count_list,
+        }
+
+        return render(request, "hod_template/home_content.html", context)
+    return redirect("/show_login")
 
 def view_students(request, id = None):
     if request.method == 'POST':
@@ -253,11 +275,11 @@ def edit_subject(request):
             subject.course_id=course
             subject.save()
             messages.success(request,"Successfully Edited Subject")
-            return HttpResponseRedirect('subjects')
+            return HttpResponseRedirect('/subjects')
         
         except:
             messages.error(request,"Failed to Edit Subject")
-            return HttpResponseRedirect('subjects')
+            return HttpResponseRedirect('/subjects')
 
 def view_courses(request, id = None):
     if request.method == 'POST':
